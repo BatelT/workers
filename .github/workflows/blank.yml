@@ -1,0 +1,37 @@
+name: CI
+
+on:
+   workflow_dispatch:
+   push:
+       branches:
+         - main
+
+jobs:
+ test-and-deploy:
+   name: Test and Deploy
+   runs-on: ubuntu-latest
+   steps:
+       - name: Checkout
+         uses: actions/checkout@v4
+
+       - name: Setup Node
+         uses: actions/setup-node@v4
+         with:
+           node-version: 20
+
+       - name: Setup JFrog CLI
+         uses: jfrog/setup-jfrog-cli@v4
+         env:  
+           JF_URL: <YOUR_JFROG_INSTANCE_URL>
+         with:
+           oidc-provider-name:<CONFIGURED_PROVIDER_NAME_ON_JFROG_PLATFORM>
+           oidc-audience: <CONFIGURED_AUDIENCE_NAME_ON_JFROG_PLATFORM>
+
+       - name: Test
+         run: npm install && npm run test
+
+       - name: Dry Run
+         run: jf worker dry-run '{}'
+
+       - name: Deploy
+         run: jf worker deploy
