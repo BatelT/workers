@@ -23,7 +23,7 @@ jobs:
          env:  
            JF_URL: https://infraservice2.jfrog.io/
          with:
-           oidc-provider-name:org-oidc        
+           oidc-provider-name: org-oidc        
 
        - name: Test
          run: npm install && npm run test
