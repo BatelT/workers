@@ -21,10 +21,9 @@ jobs:
        - name: Setup JFrog CLI
          uses: jfrog/setup-jfrog-cli@v4
          env:  
-           JF_URL: <YOUR_JFROG_INSTANCE_URL>
+           JF_URL: https://infraservice2.jfrog.io/
          with:
-           oidc-provider-name:<CONFIGURED_PROVIDER_NAME_ON_JFROG_PLATFORM>
-           oidc-audience: <CONFIGURED_AUDIENCE_NAME_ON_JFROG_PLATFORM>
+           oidc-provider-name:org-oidc        
 
        - name: Test
          run: npm install && npm run test
